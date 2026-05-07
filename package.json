@@ -129,10 +129,12 @@
   ],
   "dependencies": {
     "@agentsy/adapters": "^0.1.2",
+    "@agentsy/context": "^0.1.1",
     "@agentsy/formatting": "^0.1.1",
     "@agentsy/normalizers": "^0.1.2",
     "@agentsy/processor": "^0.1.2",
     "@agentsy/recovery": "^0.1.2",
+    "@agentsy/renderers": "^0.1.1",
     "@agentsy/structured": "^0.1.2",
     "@agentsy/thinking": "^0.1.1",
     "@agentsy/tool-calls": "^0.1.2",

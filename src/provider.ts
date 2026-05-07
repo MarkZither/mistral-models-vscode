@@ -907,7 +907,7 @@ export class MistralChatModelProvider implements LanguageModelChatProvider {
 
       const trailingText = xmlFilter.end();
       if (trailingText.length > 0) {
-        renderer.markdown(trailingText);
+        await renderer.write(trailingText);
       }
 
       const completedToolCalls = toolCallAccumulator.finalize({
@@ -1101,11 +1101,11 @@ export class MistralChatModelProvider implements LanguageModelChatProvider {
   private _emitProcessedParts(
     parts: OutputPart[],
     progress: Progress<LanguageModelResponsePart>,
-    renderer: { markdown(content: string): void },
+    renderer: { write(content: string): Promise<void> },
     toolCallAccumulator: ToolCallDeltaAccumulator,
     xmlFilter: XmlStreamFilter,
   ): void {
-    const emitTextPart = (text: string): void => {
+    const emitTextPart = async (text: string): Promise<void> => {
       if (this.activeToolNames.size > 0) {
         const xmlToolCalls = extractXmlToolCalls(text, this.activeToolNames);
         for (const xmlToolCall of xmlToolCalls) {
@@ -1124,7 +1124,7 @@ export class MistralChatModelProvider implements LanguageModelChatProvider {
 
       const filteredText = xmlFilter.write(text);
       if (filteredText.length > 0) {
-        renderer.markdown(filteredText);
+        await renderer.write(filteredText);
       }
     };
 

@@ -31,13 +31,15 @@ const mockProviderInstance: any = {
   provideTokenCount: vi.fn(),
 };
 
-vi.mock('./provider', () => ({
-  MistralChatModelProvider: vi
-    .fn()
-    .mockImplementation((context: vscode.ExtensionContext, _logOutputChannel?: vscode.LogOutputChannel) => {
-      return mockProviderInstance;
-    }),
-}));
+vi.mock('./provider', () => {
+  return {
+    MistralChatModelProvider: class {
+      constructor() {
+        return mockProviderInstance;
+      }
+    },
+  };
+});
 
 describe('extension', () => {
   const mockContext = {
